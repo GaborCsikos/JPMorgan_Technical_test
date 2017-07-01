@@ -49,15 +49,15 @@ public class TransactionFactory {
                 Long.valueOf(2l), LocalDate.of(2017, 7, 3)));
 
         result.add(crateTransaction("foo", Command.SELL, Currency.SGP,
-                BigDecimal.valueOf(10.0), BigDecimal.valueOf(2.0),
+                BigDecimal.valueOf(20.0), BigDecimal.valueOf(2.0),
                 Long.valueOf(2l), LocalDate.of(2017, 6, 30)));
 
         result.add(crateTransaction("bar", Command.SELL, Currency.SGP,
-                BigDecimal.valueOf(10.0), BigDecimal.valueOf(2.0),
+                BigDecimal.valueOf(20.0), BigDecimal.valueOf(2.0),
                 Long.valueOf(2l), LocalDate.of(2017, 6, 30)));
 
         result.add(crateTransaction("foo", Command.SELL, Currency.SGP,
-                BigDecimal.valueOf(30.0), BigDecimal.valueOf(2.0),
+                BigDecimal.valueOf(50.0), BigDecimal.valueOf(2.0),
                 Long.valueOf(2l), LocalDate.of(2017, 7, 3)));
         return result;
     }

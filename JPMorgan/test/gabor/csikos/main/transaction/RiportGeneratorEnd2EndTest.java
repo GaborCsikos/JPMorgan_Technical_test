@@ -41,8 +41,8 @@ public class RiportGeneratorEnd2EndTest {
     private String expectedOutput() {
         StringBuilder result = new StringBuilder();
         result.append("Incoming").append(System.lineSeparator());
-        result.append("2017-06-30 : 80.00").append(System.lineSeparator());
-        result.append("2017-07-03 : 120.00").append(System.lineSeparator())
+        result.append("2017-06-30 : 160.00").append(System.lineSeparator());
+        result.append("2017-07-03 : 200.00").append(System.lineSeparator())
                 .append(System.lineSeparator());
 
         result.append("Outgoing").append(System.lineSeparator());
@@ -52,8 +52,8 @@ public class RiportGeneratorEnd2EndTest {
 
         result.append("Highest Incoming to Lowest").append(
                 System.lineSeparator());
-        result.append("Name: foo | 120.00").append(System.lineSeparator());
-        result.append("Name: bar | 40.00").append(System.lineSeparator())
+        result.append("Name: foo | 200.00").append(System.lineSeparator());
+        result.append("Name: bar | 80.00").append(System.lineSeparator())
                 .append(System.lineSeparator());
 
         result.append("Highest Outgoing to Lowest").append(
