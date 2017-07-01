@@ -5,9 +5,8 @@ package gabor.csikos.main.util;
 
 import gabor.csikos.main.api.Currency;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 
 /**
  * @author Gabor Csikos
@@ -19,25 +18,20 @@ public final class DateUtil {
 
     }
 
-    public static boolean isWeekend(Date date, Currency currency) {
-        Calendar cal = new GregorianCalendar();
-        cal.setTime(date);
-        int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+    public static boolean isWeekend(LocalDate date, Currency currency) {
+        DayOfWeek dayOfWeek = date.getDayOfWeek();
         if (currency.startsOnMondayEndOnFriday()) {
-            return (Calendar.SUNDAY == dayOfWeek || Calendar.SATURDAY == dayOfWeek);
+            return (DayOfWeek.SUNDAY == dayOfWeek || DayOfWeek.SATURDAY == dayOfWeek);
         } else {
-            return (Calendar.FRIDAY == dayOfWeek || Calendar.SATURDAY == dayOfWeek);
+            return (DayOfWeek.FRIDAY == dayOfWeek || DayOfWeek.SATURDAY == dayOfWeek);
         }
     }
 
-    public static Date shifted(Date date, Currency currency) {
-        Calendar cal = new GregorianCalendar();
-        Date copy = new Date(date.getTime());
-        cal.setTime(copy);
+    public static LocalDate shifted(LocalDate date, Currency currency) {
 
-        while (DateUtil.isWeekend(cal.getTime(), currency)) {
-            cal.add(Calendar.DATE, 1);
+        while (DateUtil.isWeekend(date, currency)) {
+            date = date.plusDays(1);
         }
-        return cal.getTime();
+        return date;
     }
 }

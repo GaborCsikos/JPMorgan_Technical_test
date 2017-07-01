@@ -9,9 +9,9 @@ import gabor.csikos.main.domain.Transaction;
 import gabor.csikos.main.util.DateUtil;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,6 +38,33 @@ public class TransactionManager {
         return result;
     }
 
+    public List<Transaction> rankEntityByIncomingAmount(
+            List<Transaction> incoming) {
+        return rankEntity(Command.BUY, incoming);
+    }
+
+    public List<Transaction> rankEntityByOutGoingAmount(
+            List<Transaction> incoming) {
+        return rankEntity(Command.SELL, incoming);
+    }
+
+    public void calculateAmount(TransactionDTO dto) {
+        Map<LocalDate, BigDecimal> incomingEveryDay = new HashMap<LocalDate, BigDecimal>();
+        Map<LocalDate, BigDecimal> outgoingEveryDay = new HashMap<LocalDate, BigDecimal>();
+        for (Transaction transaction : dto.getManagedTransactions()) {
+            if (Command.BUY.equals(transaction.getCommand())) {
+                incomingEveryDay.put(transaction.getSettlementDate(),
+                        transaction.getUSDAmount());
+            } else if (Command.SELL.equals(transaction.getCommand())) {
+                outgoingEveryDay.put(transaction.getSettlementDate(),
+                        transaction.getUSDAmount());
+            }
+        }
+
+        dto.setIncomingEveryDay(incomingEveryDay);
+        dto.setOutgoingEveryDay(outgoingEveryDay);
+    }
+
     private Transaction addJustTransaction(Transaction transaction) {
         Transaction copy = new Transaction(transaction);
         copy.setSettlementDate(DateUtil.shifted(
@@ -53,33 +80,6 @@ public class TransactionManager {
         }
 
         return true;
-    }
-
-    public List<Transaction> rankEntityByIncomingAmount(
-            List<Transaction> incoming) {
-        return rankEntity(Command.BUY, incoming);
-    }
-
-    public List<Transaction> rankEntityByOutGoingAmount(
-            List<Transaction> incoming) {
-        return rankEntity(Command.SELL, incoming);
-    }
-
-    public void calculateAmount(TransactionDTO dto) {
-        Map<Date, BigDecimal> incomingEveryDay = new HashMap<Date, BigDecimal>();
-        Map<Date, BigDecimal> outgoingEveryDay = new HashMap<Date, BigDecimal>();
-        for (Transaction transaction : dto.getManagedTransactions()) {
-            if (Command.BUY.equals(transaction.getCommand())) {
-                incomingEveryDay.put(transaction.getSettlementDate(),
-                        transaction.getUSDAmount());
-            } else if (Command.SELL.equals(transaction.getCommand())) {
-                outgoingEveryDay.put(transaction.getSettlementDate(),
-                        transaction.getUSDAmount());
-            }
-        }
-
-        dto.setIncomingEveryDay(incomingEveryDay);
-        dto.setOutgoingEveryDay(outgoingEveryDay);
     }
 
     private List<Transaction> rankEntity(Command command,

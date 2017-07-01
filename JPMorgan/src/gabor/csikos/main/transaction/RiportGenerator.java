@@ -6,7 +6,7 @@ package gabor.csikos.main.transaction;
 import gabor.csikos.main.domain.Transaction;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -19,9 +19,10 @@ public class RiportGenerator {
     private static final String HEADER_INCOMING = "Highest Incoming to Lowest";
     private static final String HEADER_OUTGOING = "Highest Outgoing to Lowest";
 
-    public void printAmuntSettled(String header, Map<Date, BigDecimal> incoming) {
+    public void printAmuntSettled(String header,
+            Map<LocalDate, BigDecimal> incoming) {
         System.out.println(header);
-        for (Map.Entry<Date, BigDecimal> entry : incoming.entrySet()) {
+        for (Map.Entry<LocalDate, BigDecimal> entry : incoming.entrySet()) {
             System.out.println(entry.getKey() + " : " + entry.getValue());
         }
 

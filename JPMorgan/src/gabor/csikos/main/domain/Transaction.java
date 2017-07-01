@@ -7,7 +7,7 @@ import gabor.csikos.main.api.Command;
 import gabor.csikos.main.api.Currency;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
  * @author Gabor Csikos
@@ -23,8 +23,8 @@ public class Transaction implements Comparable<Transaction> {
     private Command command;
     private BigDecimal agreedFx;
     private Currency currency;
-    private Date instructionDate;
-    private Date settlementDate;
+    private LocalDate instructionDate;
+    private LocalDate settlementDate;
     private Long units;
     private BigDecimal pricePerUnit;
 
@@ -67,19 +67,19 @@ public class Transaction implements Comparable<Transaction> {
         this.currency = currency;
     }
 
-    public Date getInstructionDate() {
+    public LocalDate getInstructionDate() {
         return instructionDate;
     }
 
-    public void setInstructionDate(Date instructionDate) {
+    public void setInstructionDate(LocalDate instructionDate) {
         this.instructionDate = instructionDate;
     }
 
-    public Date getSettlementDate() {
+    public LocalDate getSettlementDate() {
         return settlementDate;
     }
 
-    public void setSettlementDate(Date settlementDate) {
+    public void setSettlementDate(LocalDate settlementDate) {
         this.settlementDate = settlementDate;
     }
 

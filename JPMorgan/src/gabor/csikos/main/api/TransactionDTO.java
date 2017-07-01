@@ -6,8 +6,8 @@ package gabor.csikos.main.api;
 import gabor.csikos.main.domain.Transaction;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -18,23 +18,23 @@ import java.util.TreeMap;
  */
 public class TransactionDTO {
 
-    private Map<Date, BigDecimal> incomingEveryDay = new TreeMap<Date, BigDecimal>();
-    private Map<Date, BigDecimal> outgoingEveryDay = new TreeMap<Date, BigDecimal>();
+    private Map<LocalDate, BigDecimal> incomingEveryDay = new TreeMap<LocalDate, BigDecimal>();
+    private Map<LocalDate, BigDecimal> outgoingEveryDay = new TreeMap<LocalDate, BigDecimal>();
     private List<Transaction> managedTransactions = new ArrayList<Transaction>();
 
-    public Map<Date, BigDecimal> getIncomingEveryDay() {
+    public Map<LocalDate, BigDecimal> getIncomingEveryDay() {
         return incomingEveryDay;
     }
 
-    public void setIncomingEveryDay(Map<Date, BigDecimal> incomingEveryDay) {
+    public void setIncomingEveryDay(Map<LocalDate, BigDecimal> incomingEveryDay) {
         this.incomingEveryDay = incomingEveryDay;
     }
 
-    public Map<Date, BigDecimal> getOutgoingEveryDay() {
+    public Map<LocalDate, BigDecimal> getOutgoingEveryDay() {
         return outgoingEveryDay;
     }
 
-    public void setOutgoingEveryDay(Map<Date, BigDecimal> outgoingEveryDay) {
+    public void setOutgoingEveryDay(Map<LocalDate, BigDecimal> outgoingEveryDay) {
         this.outgoingEveryDay = outgoingEveryDay;
     }
 

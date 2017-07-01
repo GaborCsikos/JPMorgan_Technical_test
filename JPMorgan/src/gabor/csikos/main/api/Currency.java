@@ -4,6 +4,8 @@
 package gabor.csikos.main.api;
 
 /**
+ * Enum for the currencies what the System can handle
+ * 
  * @author Gabor Csikos
  * 
  */

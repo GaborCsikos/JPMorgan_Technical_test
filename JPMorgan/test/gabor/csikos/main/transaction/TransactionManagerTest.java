@@ -10,10 +10,8 @@ import gabor.csikos.main.api.TransactionDTO;
 import gabor.csikos.main.domain.Transaction;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.junit.Test;
@@ -24,14 +22,9 @@ public class TransactionManagerTest {
 
     @Test
     public void rankEntityByIncomingAmount() {
-        Date fooDate = Date.from(LocalDateTime.of(2017, 6, 25, 3, 0)
-                .atZone(ZoneId.systemDefault()).toInstant());
-
-        Date barDate = Date.from(LocalDateTime.of(2017, 6, 25, 2, 0)
-                .atZone(ZoneId.systemDefault()).toInstant());
-
-        Date wontUse = Date.from(LocalDateTime.of(2017, 6, 25, 1, 0)
-                .atZone(ZoneId.systemDefault()).toInstant());
+        LocalDate fooDate = LocalDate.of(2017, 6, 25);
+        LocalDate barDate = LocalDate.of(2017, 6, 25);
+        LocalDate wontUse = LocalDate.of(2017, 6, 25);
 
         List<Transaction> incoming = new ArrayList<Transaction>();
         incoming.add(crateTransaction("foo", Command.BUY, Currency.AED,
@@ -52,14 +45,9 @@ public class TransactionManagerTest {
 
     @Test
     public void rankEntityByOutGoingAmount() {
-        Date fooDate = Date.from(LocalDateTime.of(2017, 6, 25, 3, 0)
-                .atZone(ZoneId.systemDefault()).toInstant());
-
-        Date barDate = Date.from(LocalDateTime.of(2017, 6, 25, 2, 0)
-                .atZone(ZoneId.systemDefault()).toInstant());
-
-        Date wontUse = Date.from(LocalDateTime.of(2017, 6, 25, 1, 0)
-                .atZone(ZoneId.systemDefault()).toInstant());
+        LocalDate fooDate = LocalDate.of(2017, 6, 25);
+        LocalDate barDate = LocalDate.of(2017, 6, 25);
+        LocalDate wontUse = LocalDate.of(2017, 6, 25);
 
         List<Transaction> incoming = new ArrayList<Transaction>();
         incoming.add(crateTransaction("foo", Command.SELL, Currency.AED,
@@ -80,14 +68,9 @@ public class TransactionManagerTest {
     @Test
     public void adjustTransactionsForWorkingDay() {
         List<Transaction> incoming = new ArrayList<Transaction>();
-        Date adjust = Date.from(LocalDateTime.of(2017, 6, 18, 2, 0)
-                .atZone(ZoneId.systemDefault()).toInstant());
-
-        Date adjusted = Date.from(LocalDateTime.of(2017, 6, 19, 2, 0)
-                .atZone(ZoneId.systemDefault()).toInstant());
-
-        Date dontAdjust = Date.from(LocalDateTime.of(2017, 6, 19, 3, 0)
-                .atZone(ZoneId.systemDefault()).toInstant());
+        LocalDate adjust = LocalDate.of(2017, 6, 18);
+        LocalDate adjusted = LocalDate.of(2017, 6, 19);
+        LocalDate dontAdjust = LocalDate.of(2017, 6, 19);
 
         incoming.add(crateTransaction("foo", Command.SELL, Currency.SGP,
                 BigDecimal.valueOf(10.0), BigDecimal.valueOf(1), 1l, adjust));
@@ -106,11 +89,8 @@ public class TransactionManagerTest {
     @Test
     public void calculateAmount() {
         TransactionDTO dto = new TransactionDTO();
-        Date buyDate = Date.from(LocalDateTime.of(2017, 6, 25, 2, 0)
-                .atZone(ZoneId.systemDefault()).toInstant());
-
-        Date sellDate = Date.from(LocalDateTime.of(2017, 6, 25, 3, 0)
-                .atZone(ZoneId.systemDefault()).toInstant());
+        LocalDate buyDate = LocalDate.of(2017, 6, 25);
+        LocalDate sellDate = LocalDate.of(2017, 6, 25);
 
         List<Transaction> managedTransactions = new ArrayList<Transaction>();
         managedTransactions.add(crateTransaction("buy", Command.BUY,
@@ -130,7 +110,7 @@ public class TransactionManagerTest {
 
     private Transaction crateTransaction(String entityName, Command command,
             Currency currency, BigDecimal pricePerUnit, BigDecimal agreedFx,
-            Long units, Date settlementDate) {
+            Long units, LocalDate settlementDate) {
         Transaction transaction = new Transaction();
         transaction.setEntityName(entityName);
         transaction.setCommand(command);
