@@ -12,11 +12,15 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 
 /**
+ * Class to handle transanction operations
+ * 
  * @author Gabor Csikos
  * 
  */
@@ -49,15 +53,30 @@ public class TransactionManager {
     }
 
     public void calculateAmount(TransactionDTO dto) {
-        Map<LocalDate, BigDecimal> incomingEveryDay = new HashMap<LocalDate, BigDecimal>();
-        Map<LocalDate, BigDecimal> outgoingEveryDay = new HashMap<LocalDate, BigDecimal>();
+        Map<LocalDate, BigDecimal> incomingEveryDay = new TreeMap<LocalDate, BigDecimal>();
+        Map<LocalDate, BigDecimal> outgoingEveryDay = new TreeMap<LocalDate, BigDecimal>();
         for (Transaction transaction : dto.getManagedTransactions()) {
             if (Command.BUY.equals(transaction.getCommand())) {
-                incomingEveryDay.put(transaction.getSettlementDate(),
-                        transaction.getUSDAmount());
+                if (incomingEveryDay.get(transaction.getSettlementDate()) == null) {
+                    incomingEveryDay.put(transaction.getSettlementDate(),
+                            transaction.getUSDAmount());
+                } else {
+                    BigDecimal oldValue = incomingEveryDay.get(transaction
+                            .getSettlementDate());
+                    incomingEveryDay.put(transaction.getSettlementDate(),
+                            oldValue.add(transaction.getUSDAmount()));
+                }
+
             } else if (Command.SELL.equals(transaction.getCommand())) {
-                outgoingEveryDay.put(transaction.getSettlementDate(),
-                        transaction.getUSDAmount());
+                if (outgoingEveryDay.get(transaction.getSettlementDate()) == null) {
+                    outgoingEveryDay.put(transaction.getSettlementDate(),
+                            transaction.getUSDAmount());
+                } else {
+                    BigDecimal oldValue = outgoingEveryDay.get(transaction
+                            .getSettlementDate());
+                    outgoingEveryDay.put(transaction.getSettlementDate(),
+                            oldValue.add(transaction.getUSDAmount()));
+                }
             }
         }
 
@@ -82,6 +101,15 @@ public class TransactionManager {
         return true;
     }
 
+    /*
+     * The rankink follows the logic: We add add all elements by command type
+     * what we want to sort.
+     * 
+     * Then we sort the elements, and add them to a Set, the result will be a
+     * unique List with the highest elements.
+     * 
+     * We sort the result.
+     */
     private List<Transaction> rankEntity(Command command,
             List<Transaction> incoming) {
         List<Transaction> sorted = new ArrayList<Transaction>();
@@ -91,8 +119,11 @@ public class TransactionManager {
             }
         }
         Collections.sort(sorted);
-        Collections.reverse(sorted);
-        return sorted;
+        Set<Transaction> uniqueElements = new HashSet<Transaction>(sorted);
+        List<Transaction> uniqueElementsSorted = new ArrayList<Transaction>(
+                uniqueElements);
+        Collections.sort(uniqueElementsSorted);
+        return uniqueElementsSorted;
     }
 
 }

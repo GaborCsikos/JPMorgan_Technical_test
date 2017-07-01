@@ -39,7 +39,7 @@ public class ApplicationRunner {
         riportGenerator
                 .printAmuntSettled("Incoming", dto.getIncomingEveryDay());
         riportGenerator
-                .printAmuntSettled("OutGoing", dto.getOutgoingEveryDay());
+                .printAmuntSettled("Outgoing", dto.getOutgoingEveryDay());
         riportGenerator.printRankIncoming(manager
                 .rankEntityByIncomingAmount(dto.getManagedTransactions()));
         riportGenerator.printRankOutGoing(manager

@@ -1,5 +1,6 @@
 package gabor.csikos.main.transaction;
 
+import static org.junit.Assert.assertEquals;
 import gabor.csikos.main.ApplicationRunner;
 
 import java.io.ByteArrayOutputStream;
@@ -31,8 +32,36 @@ public class RiportGeneratorEnd2EndTest {
     }
 
     @Test
-    public void testHappyPath() {
+    public void sammpleTransaction() {
+        application.execute();
+        application.generateReport();
+        assertEquals(expectedOutput(), outContent.toString());
+    }
 
+    private String expectedOutput() {
+        StringBuilder result = new StringBuilder();
+        result.append("Incoming").append(System.lineSeparator());
+        result.append("2017-06-30 : 80.00").append(System.lineSeparator());
+        result.append("2017-07-03 : 120.00").append(System.lineSeparator())
+                .append(System.lineSeparator());
+
+        result.append("Outgoing").append(System.lineSeparator());
+        result.append("2017-06-30 : 80.00").append(System.lineSeparator());
+        result.append("2017-07-03 : 120.00").append(System.lineSeparator())
+                .append(System.lineSeparator());
+
+        result.append("Highest Incoming to Lowest").append(
+                System.lineSeparator());
+        result.append("Name: foo | 120.00").append(System.lineSeparator());
+        result.append("Name: bar | 40.00").append(System.lineSeparator())
+                .append(System.lineSeparator());
+
+        result.append("Highest Outgoing to Lowest").append(
+                System.lineSeparator());
+        result.append("Name: foo | 120.00").append(System.lineSeparator());
+        result.append("Name: bar | 40.00").append(System.lineSeparator())
+                .append(System.lineSeparator());
+        return result.toString();
     }
 
 }

@@ -25,15 +25,18 @@ public class RiportGenerator {
         for (Map.Entry<LocalDate, BigDecimal> entry : incoming.entrySet()) {
             System.out.println(entry.getKey() + " : " + entry.getValue());
         }
+        System.out.print(System.lineSeparator());
 
     }
 
     public void printRankIncoming(List<Transaction> transactions) {
         printRank(transactions, HEADER_INCOMING);
+        System.out.print(System.lineSeparator());
     }
 
     public void printRankOutGoing(List<Transaction> transactions) {
         printRank(transactions, HEADER_OUTGOING);
+        System.out.print(System.lineSeparator());
     }
 
     private void printRank(List<Transaction> transactions, String header) {
