@@ -44,19 +44,19 @@ public class TransactionManager {
 
     public List<Transaction> rankEntityByIncomingAmount(
             List<Transaction> incoming) {
-        return rankEntity(Command.BUY, incoming);
+        return rankEntity(Command.SELL, incoming);
     }
 
     public List<Transaction> rankEntityByOutGoingAmount(
             List<Transaction> incoming) {
-        return rankEntity(Command.SELL, incoming);
+        return rankEntity(Command.BUY, incoming);
     }
 
     public void calculateAmount(TransactionDTO dto) {
         Map<LocalDate, BigDecimal> incomingEveryDay = new TreeMap<LocalDate, BigDecimal>();
         Map<LocalDate, BigDecimal> outgoingEveryDay = new TreeMap<LocalDate, BigDecimal>();
         for (Transaction transaction : dto.getManagedTransactions()) {
-            if (Command.BUY.equals(transaction.getCommand())) {
+            if (Command.SELL.equals(transaction.getCommand())) {
                 if (incomingEveryDay.get(transaction.getSettlementDate()) == null) {
                     incomingEveryDay.put(transaction.getSettlementDate(),
                             transaction.getUSDAmount());
@@ -67,7 +67,7 @@ public class TransactionManager {
                             oldValue.add(transaction.getUSDAmount()));
                 }
 
-            } else if (Command.SELL.equals(transaction.getCommand())) {
+            } else if (Command.BUY.equals(transaction.getCommand())) {
                 if (outgoingEveryDay.get(transaction.getSettlementDate()) == null) {
                     outgoingEveryDay.put(transaction.getSettlementDate(),
                             transaction.getUSDAmount());
